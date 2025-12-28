@@ -94,15 +94,15 @@ const ResultsStep = ({ data }) => {
             </div>
             <div className="cost-link-container">
               <span className="popup-container" ref={stampDutyRef}>
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
+                <button
+                  type="button"
+                  className="text-link-button"
+                  onClick={() => {
                     setShowStampDutyPopup(!showStampDutyPopup);
                   }}
                 >
                   How we worked this out
-                </a>
+                </button>
                 {showStampDutyPopup && (
                   <div className="popup-box">
                     Stamp Duty figures quoted are for mortgages that complete
@@ -126,15 +126,15 @@ const ResultsStep = ({ data }) => {
             </div>
             <div className="cost-link-container">
               <span className="popup-container" ref={legalFeesRef}>
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
+                <button
+                  type="button"
+                  className="text-link-button"
+                  onClick={() => {
                     setShowLegalFeesPopup(!showLegalFeesPopup);
                   }}
                 >
                   How we worked this out
-                </a>
+                </button>
                 {showLegalFeesPopup && (
                   <div className="popup-box">
                     These are typical costs of a freehold home worth £225,000
