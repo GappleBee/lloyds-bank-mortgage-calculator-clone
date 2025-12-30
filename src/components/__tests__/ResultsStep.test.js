@@ -18,8 +18,11 @@ describe("ResultsStep", () => {
     // Borrowing: 30000 * 4.5 = 135,000
     expect(screen.getByText(/£135,000/)).toBeInTheDocument();
 
-    // Stamp Duty: (135000 + 20000) < 250000 => 0
-    expect(screen.getByText(/Stamp Duty: £0/)).toBeInTheDocument();
+    // Stamp Duty:
+    // Property Value: 135000 + 20000 = 155000
+    // 0 - 125k: 0
+    // 125k - 155k (30k): 30000 * 0.02 = 600
+    expect(screen.getByText(/Stamp Duty: £600/)).toBeInTheDocument();
   });
 
   test("calculates borrowing amount and stamp duty correctly for complex case", () => {
@@ -43,8 +46,11 @@ describe("ResultsStep", () => {
 
     // Stamp Duty calculation:
     // Property Value: 283700 + 50000 = 333700
-    // Duty: (333700 - 250000) * 0.05 = 4185
-    expect(screen.getByText(/Stamp Duty: £4,185/)).toBeInTheDocument();
+    // 0 - 125k: 0
+    // 125k - 250k: 125000 * 0.02 = 2500
+    // 250k - 333700: 83700 * 0.05 = 4185
+    // Total: 2500 + 4185 = 6685
+    expect(screen.getByText(/Stamp Duty: £6,685/)).toBeInTheDocument();
   });
 
   test("toggles stamp duty popup", () => {

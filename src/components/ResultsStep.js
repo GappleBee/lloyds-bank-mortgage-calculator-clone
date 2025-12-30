@@ -56,16 +56,32 @@ const ResultsStep = ({ data }) => {
   const legalFees = 1430;
   const valuationFee = 100;
 
-  // Stamp duty (Simplified for UK: 0% up to 250k, 5% next 675k, etc. - assuming first time buyer or mover)
-  // Let's assume property value = borrowing + deposit
+  // Stamp duty (Standard rates for single property)
+  // 0% up to 125k
+  // 2% 125k-250k
+  // 5% 250k-925k
+  // 10% 925k-1.5m
+  // 12% above 1.5m
   const deposit = parseFloat(data.deposit || 0);
   const propertyValue = borrowingAmount + deposit;
 
   let stampDuty = 0;
-  if (propertyValue > 250000) {
-    stampDuty = (propertyValue - 250000) * 0.05;
+
+  if (propertyValue > 1500000) {
+    stampDuty += (propertyValue - 1500000) * 0.12;
+    stampDuty += (1500000 - 925000) * 0.1;
+    stampDuty += (925000 - 250000) * 0.05;
+    stampDuty += (250000 - 125000) * 0.02;
+  } else if (propertyValue > 925000) {
+    stampDuty += (propertyValue - 925000) * 0.1;
+    stampDuty += (925000 - 250000) * 0.05;
+    stampDuty += (250000 - 125000) * 0.02;
+  } else if (propertyValue > 250000) {
+    stampDuty += (propertyValue - 250000) * 0.05;
+    stampDuty += (250000 - 125000) * 0.02;
+  } else if (propertyValue > 125000) {
+    stampDuty += (propertyValue - 125000) * 0.02;
   }
-  // (Very simplified stamp duty)
 
   const totalOtherCosts = stampDuty + legalFees + valuationFee;
 
